@@ -1,0 +1,18 @@
+- hosts: myserver
+  tasks:
+   - name: Database
+     docker:
+       name: database
+       image: postgres:9.4
+       state: started
+   - name: My application
+     docker:
+       name: web
+       image: quay.io/myapp/minimal-sinatra:latest
+       pull: always
+       state: reloaded
+       env:
+         SOMEVAR: value
+         SHH_SECRET: "{{ from_the_vault }}"
+       link:
+         - "database:database"

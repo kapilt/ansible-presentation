@@ -1,0 +1,309 @@
+DevOps with Ansible
+26 August 2015
+
+kapil.thangavelu at capitalone dot com
+http://github.com/kapilt
+@kapilvt
+
+
+##########################
+* Software Trends
+
+- Clouds
+
+- Microservices
+
+- Containers
+
+- Continous deployment
+
+Lots more resources to manage on a dynamic basis
+
+
+##########################
+* Config Management
+
+At a high level breaks down into 3 key resources
+
+- Service / Process management
+
+- Files (templates, copies, attributes)
+
+- Distribution Packages
+
+
+
+
+##########################
+* Application Deployment
+
+- app source (vcs) deployment to machines
+
+- database management
+
+- Load balancer
+
+- examples: Capistrano, Fabric, Ansible (All SSH)
+
+
+
+
+##########################
+* IAAS Management
+
+- provision servers
+
+- load balancers
+
+- volumes
+
+- databases
+
+- network topology
+
+- autoscale groups
+
+
+
+##########################
+* cfg mgmt history
+
+CFEngine (1993)
+- Convergence (Describe Goal state, agents converge to it)
+- Idempotence
+ 
+Puppet (2005)
+- Stronger resource model (files, packages, services)
+- Dependency Graph sort
+ 
+Chef (2009)
+- Switch DSL to Ruby
+- Sequential Flow
+
+Ansible (2011)
+
+Lots of others (Salt, bcfg2)
+
+
+
+
+
+##########################
+* Ansible
+
+Goals
+
+- Simplicity / Pragmatic / Flexible
+
+Why
+
+- address common concerns of multi-node deployments working in concert
+
+- address disconnect between config tools and deployment tools
+
+- avoiding agent issues (cve, is it up, ntp, certs/ca, resource consumption)
+
+# complexity of existing tools in addressing common concerns
+
+
+
+
+##########################
+* Ansible 
+
+
+How
+
+- agent-less
+
+- push based default (optional pull)
+
+- ssh for node communications
+
+- yaml DSL
+
+- small core / extensible in any language
+
+
+##########################
+* Example
+
+  $ cat web.yml
+
+.code files/tasks.yml
+
+  $ ansible-playbook -i myhosts web.yml
+
+
+##########################
+* Inventory
+
+- Hosts, Groups, Variables
+
+Can source from
+
+- Text Files (static)
+- Any CMDB
+- AWS / GCE / Openstack / Digital Ocean
+- Any Script that can return JSON
+
+
+##########################
+* Variables
+
+- from inventory
+- from host_vars, group_vars
+- from register (ie. output of any task)
+- facts automatically gathered from nodes (plus ohai and facter if present).
+- cli variables
+
+- lists, dicts/maps/hash table, booleans, integer, strings, etc.
+
+
+##########################
+* Ad Hoc Mode
+
+Great for quick exploration, one off task, ie. pragmatic
+
+  $ ansible -i ec2.py -m ping us-east-1
+   172.94.160.165 | success >> {
+      "changed": false,
+          "ping": "pong"
+  	}
+   172.94.160.166 | success >> {
+      "changed": false,
+          "ping": "pong"
+        }
+   172.94.160.167 | success >> {
+      "changed": false,
+         "ping": "pong"
+        }
+
+
+##########################
+* Ansible DSL / Playbook
+
+- YAML 
+
+- Variable interpolation {{ my_var }}
+
+- Loops (with_items)
+
+- Conditionals (when)
+
+- Blocks (v2)
+
+- Notification handlers
+
+
+
+##########################
+* Ansible DSL / Playbook
+
+- A playbook is a collection of plays
+
+- A play is a collection of tasks
+
+
+
+##########################
+* Modules
+
+Batteries included
+
+Hundreds of modules with broad and deep coverage.
+
+Unix & Windows, Load balancers, Package management, Cloud
+
+Containers, Databases, VCS, monitoring, hipchat/irc, etc.
+
+[[http://docs.ansible.com/ansible/list_of_all_modules.html]]
+
+Written in  _any_ language as long as it can input/output json
+
+
+
+
+##########################
+* Roles
+
+Provide a standard structure for making playbooks reusable and distributable.
+
+Ansible Galaxy provides a public distribution channel
+
+.code files/role-usage.yml
+
+
+
+##########################
+* Roles Structures
+
+.code files/role-structure.txt
+
+
+
+##########################
+* Application Deployment
+
+.code files/site.yml
+
+
+##########################
+* Rolling Update
+
+.code files/rolling_update.yml
+
+
+##########################
+* Provisioning
+
+.code files/provision.yml
+
+##########################
+* Containers
+
+
+.code files/docker.yml
+
+
+##########################
+* Comparing to Chef
+
+- Pull vs Push mode
+
+  Speed
+
+- Observation
+
+  Are we there yet?
+
+- Coordination
+
+  Sequenced operations across nodes
+
+- Security
+
+  Auto Accept :-(
+
+- Simplicity
+
+
+##########################
+* Links
+
+Ansible Docs
+[[http://docs.ansible.com]]
+
+This Presentation
+[[https://github.com/kapilt/ansible-presentation]]
+
+Michael DeHaan's Presentations
+
+Config Management Concepts and Futures
+[[https://speakerdeck.com/mpdehaan/systems-management-concepts-and-futures]]
+
+Ansible Reasons for Creation, Lessons Learned, etc
+[[https://speakerdeck.com/mpdehaan/etc]]
+
+Ansible Presentation - Origin Story / Call for simplicity
+[[https://speakerdeck.com/mpdehaan/ansible]]

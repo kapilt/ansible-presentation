@@ -1,0 +1,6 @@
+
+- hosts: webservers
+  tasks:
+    - yum: name=httpd state=installed
+    - template: src=httpd.conf.j2 dest=/etc/httpd/httpd.conf
+    - service: name=httpd state=running  

@@ -1,0 +1,21 @@
+- hosts: webservers
+  remote_user: root
+  serial: 1
+
+  pre_tasks:
+  - name: disable the server in haproxy
+    haproxy: 'state=disabled backend=myapplb host={{ inventory_hostname }} socket=/var/lib/haproxy/stats'
+    delegate_to: "{{ item }}"
+    with_items: groups.lbservers
+
+  roles:
+  - web
+
+  post_tasks:
+  - name: wait for webserver to come up
+    wait_for: 'host={{ inventory_hostname }} port=80 state=started timeout=80'
+
+  - name: enable the server in haproxy
+    haproxy: 'state=enabled backend=myapplb host={{ inventory_hostname }} socket=/var/lib/haproxy/stats'
+    delegate_to: "{{ item }}"
+    with_items: groups.lbservers

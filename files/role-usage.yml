@@ -1,0 +1,11 @@
+- hosts: webservers
+  roles:
+    - base-configuration
+    - apache
+    - webapp
+
+- hosts: dbservers
+  roles:
+    - base-configuration
+    - database
+    
