@@ -21,6 +21,12 @@ Lots more resources to manage on a dynamic basis
 
 
 ##########################
+* iotw automation is mandatory
+
+But what do we need to automate?
+
+
+##########################
 * Config Management
 
 At a high level breaks down into 3 key resources
@@ -39,12 +45,13 @@ At a high level breaks down into 3 key resources
 
 - app source (vcs) deployment to machines
 
-- database management
+- databases
 
-- Load balancer
+- load balancers
 
-- examples: Capistrano, Fabric, Ansible (All SSH)
+- message queues
 
+- caches
 
 
 
@@ -63,7 +70,8 @@ At a high level breaks down into 3 key resources
 
 - autoscale groups
 
-
+##########################
+* So what are tools
 
 ##########################
 * cfg mgmt history
@@ -160,25 +168,6 @@ Can source from
 - lists, dicts/maps/hash table, booleans, integer, strings, etc.
 
 
-##########################
-* Ad Hoc Mode
-
-Great for quick exploration, one off task, ie. pragmatic
-
-  $ ansible -i ec2.py -m ping us-east-1
-   172.94.160.165 | success >> {
-      "changed": false,
-          "ping": "pong"
-  	}
-   172.94.160.166 | success >> {
-      "changed": false,
-          "ping": "pong"
-        }
-   172.94.160.167 | success >> {
-      "changed": false,
-         "ping": "pong"
-        }
-
 
 ##########################
 * Ansible DSL / Playbook
@@ -240,6 +229,25 @@ Ansible Galaxy provides a public distribution channel
 
 .code files/role-structure.txt
 
+
+##########################
+* Ad Hoc Mode
+
+Great for quick exploration, one off task, ie. pragmatic
+
+  $ ansible -i ec2.py -m ping us-east-1
+   172.94.160.165 | success >> {
+      "changed": false,
+          "ping": "pong"
+  	}
+   172.94.160.166 | success >> {
+      "changed": false,
+          "ping": "pong"
+        }
+   172.94.160.167 | success >> {
+      "changed": false,
+         "ping": "pong"
+        }
 
 
 ##########################
